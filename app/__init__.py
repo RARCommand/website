@@ -18,16 +18,16 @@ def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # Инициализация расширений
+    # init extensions
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
-    # Регистрация blueprints
+    # registr blueprints
     app.register_blueprint(main)
     app.register_blueprint(admin, url_prefix='/admin')
     app.register_blueprint(auth, url_prefix='/auth')
-    app.register_blueprint(cart, url_prefix='/cart')  # Используем '/cart' для уникального префикса
+    app.register_blueprint(cart, url_prefix='/cart')
     app.register_blueprint(profile, url_prefix='/profile')
 
     return app

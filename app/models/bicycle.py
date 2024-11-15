@@ -1,5 +1,3 @@
-# app/models/bicycle.py
-
 from datetime import datetime
 from app.extensions import db
 from flask_login import UserMixin

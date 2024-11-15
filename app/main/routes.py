@@ -11,15 +11,15 @@ cart = Blueprint('cart', __name__)
 
 @main.route('/')
 def home():
-    # Получаем параметры фильтров из запроса
+    # Getting the filter parameters from the request
     min_price = request.args.get('min_price', type=float)
     max_price = request.args.get('max_price', type=float)
     category_id = request.args.get('category_id', type=int)
 
-    # Находим максимальную цену среди всех велосипедов
-    max_bicycle_price = db.session.query(db.func.max(Bicycle.price)).scalar() or 10000  # Значение по умолчанию
+    # Find the maximum price among all bicycles
+    max_bicycle_price = db.session.query(db.func.max(Bicycle.price)).scalar() or 10000  # Default Value
 
-    # Создаем запрос с фильтрами
+    # Creating a query with filters
     bicycles_query = db.session.query(Bicycle)
     if min_price is not None:
         bicycles_query = bicycles_query.filter(Bicycle.price >= min_price)
@@ -28,7 +28,7 @@ def home():
     if category_id:
         bicycles_query = bicycles_query.filter(Bicycle.category_id == category_id)
 
-    # Получаем список велосипедов и категорий
+    # Get a list of bicycles and categories
     bicycles = bicycles_query.all()
     categories = db.session.query(Category).all()
 
@@ -36,7 +36,7 @@ def home():
         'home.html',
         bicycles=bicycles,
         categories=categories,
-        max_bicycle_price=max_bicycle_price  # Передаем максимальную цену в шаблон
+        max_bicycle_price=max_bicycle_price  # Transfer the max price to html
     )
 
 

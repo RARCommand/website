@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Вход{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
 <main>
-    <h1>Вход</h1>
+    <h1>Login</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -17,15 +17,15 @@
     {% endwith %}
 
     <form method="POST" action="{{ url_for('auth.login') }}">
-        <label for="username">Имя пользователя:</label>
+        <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
 
-        <label for="password">Пароль:</label>
+        <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
 
-        <button type="submit">Войти</button>
+        <button type="submit">Login</button>
     </form>
 
-    <p>Нет аккаунта? <a href="{{ url_for('auth.signup') }}">Зарегистрироваться</a></p>
+    <p>Don't have an account? <a href="{{ url_for('auth.signup') }}">Sign up</a></p>
 </main>
 {% endblock %}
