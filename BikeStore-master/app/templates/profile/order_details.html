@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Детали Заказа{% endblock %}
+
+{% block content %}
+<main>
+    <h1>Детали Заказа</h1>
+
+    <p><strong>Номер заказа:</strong> {{ order.order_number }}</p>
+    <p><strong>Дата создания:</strong> {{ order.date_created.strftime('%Y-%m-%d') if order.date_created else 'Неизвестно' }}</p>
+    <p><strong>Статус заказа:</strong> {{ order.status if order.status else 'Неизвестно' }}</p>
+
+    <h3>Список Велосипедов:</h3>
+    <ul>
+        {% for bicycle in order.bicycles %}
+            <li>{{ bicycle.name }} - {{ bicycle.price }} USD</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('profile.user_profile') }}">Вернуться в Личный Кабинет</a>
+</main>
+{% endblock %}

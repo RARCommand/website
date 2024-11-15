@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<h1>Велосипеды на продажу</h1>
+
+<!-- Кнопка для открытия фильтров -->
+<button id="toggle-filters" class="btn-toggle-filters">Фильтры</button>
+
+<aside class="filters" id="filters-section" style="display: none; border: 1px solid #ddd; background-color: #f9f9f9; padding: 25px; margin-bottom: 30px; margin-top: 20px;">
+    <h3>Фильтры</h3>
+    <form method="GET" action="{{ url_for('main.home') }}">
+        <label for="price_range">Диапазон цены:</label>
+        <div class="price-range-slider" style="margin-bottom: 15px;">
+            <div id="slider-range"></div>
+            <input type="hidden" id="min_price" name="min_price" value="0">
+            <input type="hidden" id="max_price" name="max_price" value="{{ max_bicycle_price }}">
+        </div>
+        <div class="price-range-labels" style="margin-bottom: 15px;">
+            <span id="min_price_label">0 USD</span>
+            <span id="max_price_label" style="float: right;">{{ max_bicycle_price }} USD</span>
+        </div>
+
+        <label for="category_id">Категория:</label>
+        <select name="category_id">
+            <option value="">Все категории</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Применить фильтры</button>
+    </form>
+</aside>
+
+<!-- Список велосипедов -->
+<ul class="bicycle-list">
+    {% for bicycle in bicycles %}
+        <li class="bicycle-item">
+            <!-- Изображение велосипеда сверху -->
+            {% if bicycle.image_filename %}
+                <img src="{{ url_for('static', filename='uploads/' + bicycle.image_filename) }}" alt="{{ bicycle.name }}" class="bicycle-image">
+            {% endif %}
+
+            <!-- Контейнер для текстовой информации ниже изображения -->
+            <div class="bicycle-details">
+                <h2>{{ bicycle.name }}</h2>
+                <p>{{ bicycle.description }}</p>
+                <p>Цена: {{ bicycle.price }} USD</p>
+                <p>Категория: {{ bicycle.category.name if bicycle.category else "Без категории" }}</p>
+
+                <h3>Характеристики:</h3>
+                <ul class="bicycle-specifications">
+                    {% for spec in bicycle.specifications %}
+                        <li><strong>{{ spec.name }}:</strong> {{ spec.value }}</li>
+                    {% endfor %}
+                </ul>
+
+                <form method="POST" action="{{ url_for('cart.add_to_cart', bicycle_id=bicycle.id) }}">
+                    <input type="hidden" name="_method" value="POST">
+                    <button type="submit" class="btn-add-to-cart" style="background-color: green; color: white;">Добавить в корзину</button>
+                </form>
+            </div>
+        </li>
+    {% else %}
+        <li>Нет велосипедов, подходящих под выбранный вами фильтр</li>
+    {% endfor %}
+</ul>
+
+<!-- Подключение jQuery и jQuery UI -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLR0QBzEXp3KS5ZjX7LEuqG0HAsZCbrD3yE5BxTxG4" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha384-T0V8fpEIJA5Gz/5MrrZLra6EmEd1bG2ICdTAyPDsFjCZOkQ8bGu8FMt5nGqNTeXZ" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script>
+    // Переключение видимости секции фильтров
+    document.getElementById('toggle-filters').addEventListener('click', function() {
+        const filtersSection = document.getElementById('filters-section');
+        filtersSection.style.display = (filtersSection.style.display === 'none' || filtersSection.style.display === '') ? 'block' : 'none';
+    });
+
+    // Инициализация слайдера
+    $(function() {
+        const maxPrice = {{ max_bicycle_price }};  // Получаем максимальную цену из шаблона
+
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: maxPrice,
+            values: [0, maxPrice],
+            slide: function(event, ui) {
+                $("#min_price").val(ui.values[0]);
+                $("#max_price").val(ui.values[1]);
+                $("#min_price_label").text(ui.values[0] + ' USD');
+                $("#max_price_label").text(ui.values[1] + ' USD');
+            }
+        });
+
+        // Установка начальных значений
+        $("#min_price").val($("#slider-range").slider("values", 0));
+        $("#max_price").val($("#slider-range").slider("values", 1));
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,258 @@
+/* Общие стили для тела и навигации */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    padding: 1rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left, .nav-right {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.nav-left li, .nav-right li {
+    margin-right: 20px;
+}
+
+.nav-right li:last-child {
+    margin-right: 0;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.user-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+main {
+    padding: 2rem;
+    margin-bottom: 100px;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Стили для формы добавления велосипедов */
+.bicycle-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bicycle-form input[type="text"],
+.bicycle-form input[type="file"],
+.bicycle-form input[type="number"],
+.bicycle-form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.bicycle-form button {
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.bicycle-form button:hover {
+    background-color: #555;
+}
+
+/* Стили для списка велосипедов */
+.bicycle-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.bicycle-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+}
+
+.bicycle-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.bicycle-details {
+    width: 100%;
+}
+
+.bicycle-specifications {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+/* Стили для кнопок */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    width: 100px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.btn-add-to-cart {
+    background-color: green;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.btn-add-to-cart:hover {
+    background-color: darkgreen;
+}
+
+/* Стили для ссылок в навигации */
+.nav-link {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: white;
+}
+
+.nav-link:active, .nav-link:visited {
+    color: white;
+}
+
+.nav-link.current-page {
+    color: white;
+    pointer-events: none;
+}
+
+/* Стили для списка категорий */
+.category-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.category-name {
+    flex-grow: 1;
+}
+
+.delete-category-form {
+    margin-left: 20px;
+}
+
+/* Стили для кнопок Изменить и Удалить */
+.bicycle-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.btn-edit, .btn-delete {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    width: 80px; /* Одинаковая ширина для обеих кнопок */
+    cursor: pointer;
+}
+
+.btn-edit {
+    background-color: #4CAF50; /* Зеленый цвет для кнопки "Изменить" */
+}
+
+.btn-edit:hover {
+    background-color: #45a049;
+}
+
+.btn-delete {
+    background-color: #f44336; /* Красный цвет для кнопки "Удалить" */
+}
+
+.btn-delete:hover {
+    background-color: #d32f2f;
+}

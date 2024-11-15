@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Управление Категориями{% endblock %}
+
+{% block content %}
+<h1>Управление Категориями</h1>
+
+<!-- Форма для добавления новой категории -->
+<form method="POST" action="{{ url_for('admin.manage_categories') }}">
+    <input type="text" name="name" placeholder="Название категории" required>
+    <button type="submit">Добавить категорию</button>
+</form>
+
+<h2>Список Категорий</h2>
+<ul class="category-list">
+    {% for category in categories %}
+        <li class="category-item">
+            <span class="category-name">{{ category.name }}</span>
+            <form method="POST" action="{{ url_for('admin.delete_category', category_id=category.id) }}" class="delete-category-form">
+                <button type="submit" class="btn-delete" onclick="return confirm('Вы уверены, что хотите удалить эту категорию?');">Удалить</button>
+            </form>
+        </li>
+    {% else %}
+        <li>Категорий пока нет.</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('admin.manage_bicycles') }}">Назад к управлению велосипедами</a>
+
+{% endblock %}

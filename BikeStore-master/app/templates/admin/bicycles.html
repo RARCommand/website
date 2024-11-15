@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Управление Велосипедами{% endblock %}
+
+{% block content %}
+<h1>Управление Велосипедами</h1>
+
+<div class="admin-links">
+    <a href="{{ url_for('admin.manage_categories') }}" class="btn-category-management">Управление Категориями</a>
+</div>
+
+<!-- Форма для добавления нового велосипеда -->
+<form id="bicycleForm" class="bicycle-form" method="POST" enctype="multipart/form-data">
+    <input type="text" id="name" name="name" placeholder="Название велосипеда" required>
+    <textarea id="description" name="description" placeholder="Описание велосипеда" required></textarea>
+    <input type="file" id="image" name="image" required>
+    <input type="number" id="price" step="0.01" name="price" placeholder="Цена велосипеда (USD)" required>
+
+    <h3>Категория:</h3>
+    <select id="category_id" name="category_id" required>
+        <option value="">Выберите категорию</option>
+        {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+
+    <h3>Характеристики:</h3>
+    <div class="specifications">
+        <div class="specification">
+            <input type="text" name="specification_name[]" placeholder="Название характеристики" required>
+            <input type="text" name="specification_value[]" placeholder="Значение характеристики" required>
+            <button type="button" class="remove-specification">Удалить характеристику</button>
+        </div>
+    </div>
+    <button type="button" id="add-specification" class="btn-add-spec">Добавить характеристику</button>
+
+    <button type="button" onclick="submitBicycleForm()">Добавить велосипед</button>
+</form>
+
+<!-- Список велосипедов -->
+<h2>Список Велосипедов</h2>
+<ul class="bicycle-list">
+    {% for bicycle in bicycles %}
+        <li class="bicycle-item">
+            <!-- Изображение велосипеда сверху -->
+            {% if bicycle.image_filename %}
+                <img src="{{ url_for('static', filename='uploads/' + bicycle.image_filename) }}" alt="{{ bicycle.name }}" class="bicycle-image">
+            {% endif %}
+
+            <!-- Контейнер для текстовой информации ниже изображения -->
+            <div class="bicycle-details">
+                <h2>{{ bicycle.name }}</h2>
+                <p>{{ bicycle.description }}</p>
+                <p>Цена: {{ bicycle.price }} USD</p>
+                <p>Категория: {{ bicycle.category.name if bicycle.category else "Без категории" }}</p>
+
+                <h3>Характеристики:</h3>
+                <ul class="bicycle-specifications">
+                    {% for spec in bicycle.specifications %}
+                        <li><strong>{{ spec.name }}:</strong> {{ spec.value }}</li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Блок действий для админов -->
+                <div class="bicycle-actions">
+                    <!-- Кнопка изменения -->
+                    <a href="{{ url_for('admin.edit_bicycle', bicycle_id=bicycle.id) }}" class="btn-action btn-edit">Изменить</a>
+
+                    <!-- Кнопка удаления -->
+                    <form action="{{ url_for('admin.delete_bicycle', bicycle_id=bicycle.id) }}" method="post" style="display: inline;">
+                        <button type="submit" class="btn-action btn-delete" onclick="return confirm('Вы уверены, что хотите удалить этот велосипед?')">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </li>
+    {% else %}
+        <li>Нет доступных велосипедов.</li>
+    {% endfor %}
+</ul>
+
+<script>
+    // Функция для отправки данных велосипеда и изображения
+    async function submitBicycleForm() {
+        const form = document.getElementById("bicycleForm");
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch("{{ url_for('admin.manage_bicycles') }}", {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                alert("Велосипед успешно добавлен!");
+                window.location.reload();
+            } else {
+                alert("Ошибка при добавлении велосипеда.");
+            }
+        } catch (error) {
+            alert("Ошибка при отправке формы.");
+        }
+    }
+
+    // Добавление новой характеристики
+    document.getElementById('add-specification').addEventListener('click', function() {
+        const specsDiv = document.querySelector('.specifications');
+        const newSpec = document.createElement('div');
+        newSpec.classList.add('specification');
+        newSpec.innerHTML = `
+            <input type="text" name="specification_name[]" placeholder="Название характеристики" required>
+            <input type="text" name="specification_value[]" placeholder="Значение характеристики" required>
+            <button type="button" class="remove-specification">Удалить характеристику</button>
+        `;
+        specsDiv.appendChild(newSpec);
+    });
+
+    // Обработка удаления характеристики
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('remove-specification')) {
+            e.target.parentElement.remove();
+        }
+    });
+</script>
+{% endblock %}

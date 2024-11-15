@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Личный Кабинет{% endblock %}
+
+{% block content %}
+<main>
+    <h1>Личный Кабинет</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flash-messages">
+        {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    <h3>Информация о пользователе</h3>
+    <form method="POST" action="{{ url_for('profile.user_profile') }}">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username" value="{{ user.username }}" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+        <button type="submit">Обновить информацию</button>
+    </form>
+
+    <h3>История заказов</h3>
+    {% if orders %}
+        <ul class="order-history">
+            {% for order in orders %}
+                <li>
+                    <strong>Номер заказа:</strong> {{ order.order_number }}<br>
+                    <strong>Дата:</strong>
+                    {% if order.date_created %}
+                        {{ order.date_created.strftime('%Y-%m-%d') }}
+                    {% else %}
+                        Неизвестно
+                    {% endif %}
+                    <br>
+                    <strong>Статус:</strong> {{ order.status }}<br>
+                    <a href="{{ url_for('profile.view_order', order_id=order.id) }}">Подробнее</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет заказов.</p>
+    {% endif %}
+</main>
+{% endblock %}

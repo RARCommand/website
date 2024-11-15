@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Редактировать Велосипед{% endblock %}
+
+{% block content %}
+<h1>Редактировать Велосипед</h1>
+
+<form method="POST" action="{{ url_for('admin.edit_bicycle', bicycle_id=bicycle.id) }}" enctype="multipart/form-data" class="bicycle-form">
+    <input type="text" name="name" value="{{ bicycle.name }}" placeholder="Название велосипеда" required>
+    <textarea name="description" placeholder="Описание велосипеда" required>{{ bicycle.description }}</textarea>
+    <input type="file" name="image">
+    <input type="number" step="0.01" name="price" value="{{ bicycle.price }}" placeholder="Цена велосипеда (USD)" required>
+
+    <h3>Категория:</h3>
+    <select name="category_id" required>
+        <option value="">Выберите категорию</option>
+        {% for category in categories %}
+            <option value="{{ category.id }}" {% if bicycle.category_id == category.id %}selected{% endif %}>{{ category.name }}</option>
+        {% endfor %}
+    </select>
+
+    <h3>Характеристики:</h3>
+    <div class="specifications">
+        {% for spec in bicycle.specifications %}
+            <div class="specification">
+                <input type="hidden" name="specification_id[]" value="{{ spec.id }}">
+                <input type="text" name="specification_name[]" value="{{ spec.name }}" placeholder="Название характеристики" required>
+                <input type="text" name="specification_value[]" value="{{ spec.value }}" placeholder="Значение характеристики" required>
+                <button type="button" class="remove-specification">Удалить характеристику</button>
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" id="add-specification" class="btn-add-spec">Добавить характеристику</button>
+
+    <button type="submit">Сохранить изменения</button>
+</form>
+
+<a href="{{ url_for('admin.manage_bicycles') }}">Назад к списку велосипедов</a>
+
+<script>
+    // Добавление характеристики
+    document.getElementById('add-specification').addEventListener('click', function() {
+        const specsDiv = document.querySelector('.specifications');
+        const newSpec = document.createElement('div');
+        newSpec.classList.add('specification');
+        newSpec.innerHTML = `
+            <input type="hidden" name="specification_id[]" value="">
+            <input type="text" name="specification_name[]" placeholder="Название характеристики" required>
+            <input type="text" name="specification_value[]" placeholder="Значение характеристики" required>
+            <button type="button" class="remove-specification">Удалить характеристику</button>
+        `;
+        specsDiv.appendChild(newSpec);
+    });
+
+    // Обработка клика для удаления характеристики
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('remove-specification')) {
+            e.target.parentElement.remove();
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Управление Велосипедами{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-left">
+                <li><a href="{{ url_for('main.home') }}">Главная</a></li>
+                {% if current_user.is_authenticated and current_user.is_admin %}
+                    <li><a href="{{ url_for('admin.manage_bicycles') }}">Управление Велосипедами</a></li>
+                {% endif %}
+            </ul>
+            <ul class="nav-right">
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('cart.view_cart') }}" class="cart-link" style="margin-top: 20px;">Корзина</a></li>
+                    <li><a href="{{ url_for('profile.user_profile') }}" class="btn-profile" style="margin-top: 20px;">Личный кабинет</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">Выйти</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">Войти</a></li>
+                    <li><a href="{{ url_for('auth.signup') }}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <h1>Управление Велосипедами</h1>
+
+        <div class="content-wrapper">
+            <aside class="filters">
+                <h3>Фильтры</h3>
+                <form method="GET" action="{{ url_for('admin.manage_bicycles') }}">
+                    <label for="min_price">Минимальная цена:</label>
+                    <input type="number" step="0.01" name="min_price" id="min_price" placeholder="0">
+
+                    <label for="max_price">Максимальная цена:</label>
+                    <input type="number" step="0.01" name="max_price" id="max_price" placeholder="1000">
+
+                    <button type="submit">Применить фильтры</button>
+                </form>
+            </aside>
+
+            <section class="bicycle-management">
+                <form method="POST" action="{{ url_for('admin.manage_bicycles') }}" enctype="multipart/form-data" class="bicycle-form">
+                    <input type="text" name="name" placeholder="Название велосипеда" required>
+                    <textarea name="description" placeholder="Описание велосипеда" required></textarea>
+                    <input type="file" name="image" required>
+                    <input type="number" step="0.01" name="price" placeholder="Цена велосипеда (USD)" required>
+
+                    <h3>Характеристики:</h3>
+                    <div class="specifications">
+                        <div class="specification">
+                            <input type="text" name="specification_name[]" placeholder="Название характеристики" required>
+                            <input type="text" name="specification_value[]" placeholder="Значение характеристики" required>
+                            <button type="button" class="remove-specification">Удалить характеристику</button>
+                        </div>
+                    </div>
+                    <button type="button" id="add-specification" class="btn-add-spec">Добавить характеристику</button>
+
+                    <button type="submit">Добавить велосипед</button>
+                </form>
+
+                <h2>Список Велосипедов</h2>
+                <div class="bicycle-list-admin">
+                    {% for bicycle in bicycles %}
+                        <div class="bicycle-item-admin">
+                            <h3>{{ bicycle.name }}</h3>
+                            <p>{{ bicycle.description }}</p>
+                            <p>Цена: {{ bicycle.price }} USD</p>
+                            {% if bicycle.image_filename %}
+                                <img src="{{ url_for('static', filename='uploads/' + bicycle.image_filename) }}" alt="{{ bicycle.name }}" class="bicycle-image-admin">
+                            {% endif %}
+                            <div class="bicycle-actions">
+                                <a href="{{ url_for('admin.edit_bicycle', bicycle_id=bicycle.id) }}" class="btn-edit">Редактировать</a>
+                                <form method="POST" action="{{ url_for('admin.delete_bicycle', bicycle_id=bicycle.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn-delete">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+        {% endblock %}
+    </main>
+
+    <footer>
+    <p>© 2024 Магазин Велосипедов | </p>
+        <a href="{{ url_for('main.about') }}" style="color: white;">О нас</a>
+
+</footer>
+
+
+    <script>
+        document.getElementById('add-specification').addEventListener('click', function() {
+            const specsDiv = document.querySelector('.specifications');
+            const newSpec = document.createElement('div');
+            newSpec.classList.add('specification');
+            newSpec.innerHTML = `
+                <input type="text" name="specification_name[]" placeholder="Название характеристики" required>
+                <input type="text" name="specification_value[]" placeholder="Значение характеристики" required>
+                <button type="button" class="remove-specification">Удалить характеристику</button>
+            `;
+            specsDiv.appendChild(newSpec);
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('remove-specification')) {
+                e.target.parentElement.remove();
+            }
+        });
+    </script>
+
+    <style>
+        .content-wrapper {
+            display: flex;
+        }
+
+        .filters {
+            width: 20%;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+        }
+
+        .bicycle-management {
+            width: 80%;
+            padding: 20px;
+        }
+    </style>
+</body>
+</html>
