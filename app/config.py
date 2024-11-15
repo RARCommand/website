@@ -5,4 +5,4 @@ class Config:
 
 class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///bicycle_store.db')
-    SECRET_KEY = os.getenv('SECRET_KEY', 'my_secret_key')  # Замените на ваш секретный ключ
+    SECRET_KEY = os.getenv('SECRET_KEY', 'my_secret_key')

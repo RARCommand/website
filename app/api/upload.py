@@ -1,5 +1,4 @@
-# app/api/upload.py
-from fastapi import APIRouter, File, UploadFile, HTTPException
+from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
 import os
 from werkzeug.utils import secure_filename

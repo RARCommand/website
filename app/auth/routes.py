@@ -17,7 +17,7 @@ def login():
             login_user(user)
             return redirect(url_for('main.home'))
 
-        flash('Неверный email или пароль', 'danger')
+        flash('Email or Password are incorrect!', 'danger')
 
     return render_template('auth/login.html')
 
@@ -30,24 +30,24 @@ def signup():
         confirm_password = request.form['confirm_password']
 
         if password != confirm_password:
-            flash('Пароли не совпадают!', 'danger')
+            flash('Passwords are not similarly!', 'danger')
             return redirect(url_for('auth.signup'))
 
-        # Проверка уникальности email
+        # Checking for unique email
         if User.query.filter(User.email == email).first():
-            flash('Пользователь с таким email уже существует', 'danger')
+            flash('User with this email already existing!', 'danger')
             return redirect(url_for('auth.signup'))
 
-        # Создание нового пользователя
+        # Creating new user
         new_user = User(username=username, email=email)
         new_user.set_password(password)
         db.session.add(new_user)
         try:
             db.session.commit()
-            flash('Регистрация прошла успешно! Теперь вы можете войти', 'success')
+            flash('Registration was successful! Now you can log in!', 'success')
         except IntegrityError:
             db.session.rollback()
-            flash('Ошибка базы данных. Возможно, email уже существует.', 'danger')
+            flash('Database error! User with this email may exist!', 'danger')
             return redirect(url_for('auth.signup'))
 
         return redirect(url_for('auth.login'))
