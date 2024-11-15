@@ -1,38 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}Ваша корзина{% endblock %}
+{% block title %}Your Cart{% endblock %}
 
 {% block content %}
-<h1>Ваша корзина</h1>
+<h1>Your Cart</h1>
 
 <ul class="bicycle-list">
     {% for bicycle in bicycles %}
         <li class="bicycle-item">
             <h2>{{ bicycle.name }}</h2>
             <p>{{ bicycle.description }}</p>
-            <p>Цена: {{ bicycle.price }} USD</p>
+            <p>Price: {{ bicycle.price }} USD</p>
             {% if bicycle.image_filename %}
                 <img src="{{ url_for('static', filename='uploads/' + bicycle.image_filename) }}" alt="{{ bicycle.name }}" width="200">
             {% endif %}
-            <h3>Характеристики:</h3>
+            <h3>Specifications:</h3>
             <ul class="bicycle-specifications">
                 {% for spec in bicycle.specifications %}
                     <li><strong>{{ spec.name }}:</strong> {{ spec.value }}</li>
                 {% endfor %}
             </ul>
 
-            <!-- Здесь мы убираем кнопку "Добавить в корзину", поскольку велосипед уже в корзине -->
+            <!-- No "Add to Cart" button since the bicycle is already in the cart -->
             <form method="POST" action="{{ url_for('cart.remove_from_cart', bicycle_id=bicycle.id) }}">
-                <button type="submit" class="btn-remove-from-cart" style="background-color: red; color: white;">Удалить из корзины</button>
+                <button type="submit" class="btn-remove-from-cart" style="background-color: red; color: white;">Remove from Cart</button>
             </form>
         </li>
     {% else %}
-        <li>Ваша корзина пуста.</li>
+        <li>Your cart is empty.</li>
     {% endfor %}
 </ul>
 
 <form method="POST" action="{{ url_for('cart.checkout') }}">
-    <button type="submit" class="btn-checkout">Оформить заказ</button>
+    <button type="submit" class="btn-checkout">Checkout</button>
 </form>
 
 {% endblock %}

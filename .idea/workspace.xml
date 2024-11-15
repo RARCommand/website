@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f647ef04-9159-42a1-9ec6-c72660185e0f" name="Changes" comment="deleting unused files">
-      <change beforePath="$PROJECT_DIR$/app/admin/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/__init__.py" beforeDir="false" />
+    <list default="true" id="f647ef04-9159-42a1-9ec6-c72660185e0f" name="Changes" comment="changing the files">
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/bicycles.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/bicycles.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,12 +135,29 @@
       <option name="project" value="LOCAL" />
       <updated>1731699902771</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="changing the files">
+      <option name="closed" value="true" />
+      <created>1731700871594</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731700871594</updated>
+    </task>
+    <task id="LOCAL-00005" summary="changing the files">
+      <option name="closed" value="true" />
+      <created>1731700884814</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731700884814</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
     <MESSAGE value="deleting unused files" />
-    <option name="LAST_COMMIT_MESSAGE" value="deleting unused files" />
+    <MESSAGE value="changing the files" />
+    <option name="LAST_COMMIT_MESSAGE" value="changing the files" />
   </component>
 </project>

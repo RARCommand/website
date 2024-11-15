@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Личный Кабинет{% endblock %}
+{% block title %}User Profile{% endblock %}
 
 {% block content %}
 <main>
-    <h1>Личный Кабинет</h1>
+    <h1>User Profile</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -16,37 +16,37 @@
     {% endif %}
     {% endwith %}
 
-    <h3>Информация о пользователе</h3>
+    <h3>User Information</h3>
     <form method="POST" action="{{ url_for('profile.user_profile') }}">
-        <label for="username">Имя пользователя:</label>
+        <label for="username">Username:</label>
         <input type="text" id="username" name="username" value="{{ user.username }}" required>
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" value="{{ user.email }}" required>
 
-        <button type="submit">Обновить информацию</button>
+        <button type="submit">Update Information</button>
     </form>
 
-    <h3>История заказов</h3>
+    <h3>Order History</h3>
     {% if orders %}
         <ul class="order-history">
             {% for order in orders %}
                 <li>
-                    <strong>Номер заказа:</strong> {{ order.order_number }}<br>
-                    <strong>Дата:</strong>
+                    <strong>Order Number:</strong> {{ order.order_number }}<br>
+                    <strong>Date:</strong>
                     {% if order.date_created %}
                         {{ order.date_created.strftime('%Y-%m-%d') }}
                     {% else %}
-                        Неизвестно
+                        Unknown
                     {% endif %}
                     <br>
-                    <strong>Статус:</strong> {{ order.status }}<br>
-                    <a href="{{ url_for('profile.view_order', order_id=order.id) }}">Подробнее</a>
+                    <strong>Status:</strong> {{ order.status }}<br>
+                    <a href="{{ url_for('profile.view_order', order_id=order.id) }}">View Details</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>У вас пока нет заказов.</p>
+        <p>You have no orders yet.</p>
     {% endif %}
 </main>
 {% endblock %}

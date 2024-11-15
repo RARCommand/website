@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Подтверждение заказа{% endblock %}
+{% block title %}Order Confirmation{% endblock %}
 
 {% block content %}
 <main>
-    <h1>Спасибо за ваш заказ!</h1>
-    <p>Ваш заказ был успешно оформлен. Номер вашего заказа: {{ order_number }}</p>
-    <p>Ваш заказ передан администрации.</p>
-    <h3>Детали заказа:</h3>
+    <h1>Thank You for Your Order!</h1>
+    <p>Your order has been successfully placed. Your order number is: {{ order_number }}</p>
+    <p>Your order has been sent to the administration.</p>
+    <h3>Order Details:</h3>
     <ul>
         {% for bicycle in bicycles %}
             <li>
@@ -15,6 +15,6 @@
             </li>
         {% endfor %}
     </ul>
-    <a href="{{ url_for('main.home') }}" class="btn" style="color: #000;">Вернуться на главную</a>
+    <a href="{{ url_for('main.home') }}" class="btn" style="color: #000;">Return to Home</a>
 </main>
 {% endblock %}
