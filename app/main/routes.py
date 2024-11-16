@@ -123,3 +123,7 @@ def view_order(order_id):
 @main.route('/about')
 def about():
     return render_template('about.html')
+
+@main.route('/care')
+def care():
+    return render_template('care.html')

@@ -249,3 +249,19 @@ footer {
 .btn-delete:hover {
     background-color: #d32f2f;
 }
+
+.video-container {
+    display: flex; /* Устанавливает горизонтальное выравнивание */
+    gap: 20px; /* Расстояние между видео */
+    overflow-x: auto; /* Добавляет прокрутку, если видео выходят за пределы контейнера */
+    padding: 10px 0;
+}
+
+.video-container iframe {
+    flex: 0 0 auto; /* Устанавливает фиксированный размер для видео */
+    width: 560px; /* Ширина каждого видео */
+    height: 315px; /* Высота каждого видео */
+    border: 1px solid #ccc; /* Для визуального разграничения */
+    border-radius: 5px; /* Скругление углов */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Лёгкая тень */
+}
