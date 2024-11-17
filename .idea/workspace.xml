@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f647ef04-9159-42a1-9ec6-c72660185e0f" name="Changes" comment="error was solved">
-      <change afterPath="$PROJECT_DIR$/app/templates/admin/orders.html" afterDir="false" />
+    <list default="true" id="f647ef04-9159-42a1-9ec6-c72660185e0f" name="Changes" comment="adding the html and routes for chanigng password and view all users and orders">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/instance/bicycle_store.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/bicycle_store.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instance/bicycle_store.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +71,12 @@
       </branch-storage>
     </favorite-branches>
     <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
@@ -184,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731788910124</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="adding the html and routes for chanigng password and view all users and orders">
+      <option name="closed" value="true" />
+      <created>1731829482397</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731829482397</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -215,6 +228,9 @@
     <MESSAGE value="deleting unused files" />
     <MESSAGE value="changing the files" />
     <MESSAGE value="error was solved" />
-    <option name="LAST_COMMIT_MESSAGE" value="error was solved" />
+    <MESSAGE value="Update profile.html" />
+    <MESSAGE value="adding" />
+    <MESSAGE value="adding the html and routes for chanigng password and view all users and orders" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding the html and routes for chanigng password and view all users and orders" />
   </component>
 </project>
