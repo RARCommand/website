@@ -11,4 +11,4 @@ class Config:
     )
 
     # Секретный ключ для безопасности
-    SECRET_KEY = os.getenv('SECRET_KEY', 'your_default_secret_key')
+    SECRET_KEY = os.getenv('SECRET_KEY', '112358')
