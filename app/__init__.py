@@ -5,7 +5,7 @@ from .admin.routes import admin
 from .auth.routes import auth
 from flask_login import LoginManager
 from .models.bicycle import User
-from .config import DevelopmentConfig
+from .config import Config  # Импортируем общий конфиг (без разделения на Development и Production)
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -14,16 +14,16 @@ login_manager.login_view = 'auth.login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-def create_app(config_class=DevelopmentConfig):
+def create_app():
     app = Flask(__name__)
-    app.config.from_object(config_class)
+    app.config.from_object(Config)  # Используем общий конфиг
 
-    # init extensions
+    # Инициализация расширений
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
-    # registr blueprints
+    # Регистрация blueprints
     app.register_blueprint(main)
     app.register_blueprint(admin, url_prefix='/admin')
     app.register_blueprint(auth, url_prefix='/auth')
