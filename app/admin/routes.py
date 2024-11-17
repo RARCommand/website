@@ -136,3 +136,35 @@ def delete_category(category_id):
         db.session.commit()
         flash('Category was successfully deleted!', 'success')
     return redirect(url_for('admin.manage_categories'))
+
+# View all users and manage them
+@admin.route('/users', methods=['GET', 'POST'])
+@login_required
+def manage_users():
+    from app.models.bicycle import User
+    if request.method == 'POST':
+        user_id = request.form.get('user_id')
+        action = request.form.get('action')
+        user = User.query.get_or_404(user_id)
+
+        if action == 'make_admin':
+            user.is_admin = True
+            db.session.commit()
+            flash(f'User {user.username} is now an admin.', 'success')
+        elif action == 'remove_admin':
+            user.is_admin = False
+            db.session.commit()
+            flash(f'User {user.username} is no longer an admin.', 'info')
+
+        return redirect(url_for('admin.manage_users'))
+
+    users = User.query.all()
+    return render_template('admin/users.html', users=users)
+
+@admin.route('/orders', methods=['GET'])
+@login_required
+def view_orders():
+    from app.models.bicycle import Order
+
+    orders = Order.query.all()
+    return render_template('admin/orders.html', orders=orders)

@@ -49,7 +49,7 @@ def add_to_cart(bicycle_id):
         session['cart'] = []
 
     session['cart'].append(bicycle_id)
-    flash('Велосипед добавлен в корзину!', 'success')
+    flash('Bicycle was added to cart!', 'success')
     return redirect(url_for('main.home'))
 
 # Cart view
@@ -68,7 +68,7 @@ def view_cart():
 def remove_from_cart(bicycle_id):
     if 'cart' in session:
         session['cart'] = [bike_id for bike_id in session['cart'] if bike_id != bicycle_id]
-        flash('Велосипед удален из корзины.', 'info')
+        flash('Bicycle was deleted from cart!', 'info')
 
     return redirect(url_for('cart.view_cart'))
 
@@ -76,7 +76,7 @@ def remove_from_cart(bicycle_id):
 @login_required
 def checkout():
     if 'cart' not in session or not session['cart']:
-        flash('Ваша корзина пуста!', 'warning')
+        flash('Your cart is empty!', 'warning')
         return redirect(url_for('main.home'))
 
     bicycles = Bicycle.query.filter(Bicycle.id.in_(session['cart'])).all()
@@ -90,7 +90,7 @@ def checkout():
 
     # Очищаем корзину
     session.pop('cart')
-    flash('Ваш заказ успешно оформлен!', 'success')
+    flash('Your order was successfully confirmed!', 'success')
     return render_template('cart/order_confirmation.html', bicycles=bicycles, order_number=order_number)
 
 # User profile view
@@ -98,16 +98,32 @@ def checkout():
 @login_required
 def user_profile():
     if request.method == 'POST':
-        # Update user information
         current_user.username = request.form['username']
         current_user.email = request.form['email']
+
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        if current_password and new_password and confirm_password:
+            if not current_user.check_password(current_password):
+                flash('Current password incorrect', 'danger')
+                return redirect(url_for('profile.user_profile'))
+
+            if new_password != confirm_password:
+                flash('Password are not similarly!', 'danger')
+                return redirect(url_for('profile.user_profile'))
+
+            current_user.set_password(new_password)
+            flash('Password was updated!', 'success')
+
         db.session.commit()
-        flash('Информация успешно обновлена', 'success')
+        flash('Info was updated!', 'success')
         return redirect(url_for('profile.user_profile'))
 
-    # Get all user orders
     orders = Order.query.filter_by(user_id=current_user.id).all()
     return render_template('profile/profile.html', user=current_user, orders=orders)
+
 
 # View specific order
 @profile.route('/order/<int:order_id>')
@@ -115,7 +131,7 @@ def user_profile():
 def view_order(order_id):
     order = Order.query.get_or_404(order_id)
     if order.user_id != current_user.id:
-        flash('Вы не можете просматривать этот заказ', 'danger')
+        flash('You can not see this order!', 'danger')
         return redirect(url_for('profile.user_profile'))
 
     return render_template('profile/order_details.html', order=order)
