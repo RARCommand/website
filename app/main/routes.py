@@ -98,16 +98,32 @@ def checkout():
 @login_required
 def user_profile():
     if request.method == 'POST':
-        # Update user information
         current_user.username = request.form['username']
         current_user.email = request.form['email']
+
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        if current_password and new_password and confirm_password:
+            if not current_user.check_password(current_password):
+                flash('Current password incorrect', 'danger')
+                return redirect(url_for('profile.user_profile'))
+
+            if new_password != confirm_password:
+                flash('Password are not similarly!', 'danger')
+                return redirect(url_for('profile.user_profile'))
+
+            current_user.set_password(new_password)
+            flash('Password was updated!', 'success')
+
         db.session.commit()
-        flash('Information was updated', 'success')
+        flash('Info was updated!', 'success')
         return redirect(url_for('profile.user_profile'))
 
-    # Get all user orders
     orders = Order.query.filter_by(user_id=current_user.id).all()
     return render_template('profile/profile.html', user=current_user, orders=orders)
+
 
 # View specific order
 @profile.route('/order/<int:order_id>')

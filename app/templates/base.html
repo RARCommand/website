@@ -17,6 +17,8 @@
                 <li><a href="{{ url_for('main.care') }}">Care about bicycles</a></li>
                 {% if current_user.is_authenticated and current_user.is_admin %}
                     <li><a href="{{ url_for('admin.manage_bicycles') }}">Manage Bicycles</a></li>
+                    <li><a href="{{ url_for('admin.manage_users') }}">Manage Users</a></li>
+                    <li><a href="{{ url_for('admin.view_orders') }}">All Orders</a></li>
                 {% endif %}
             </ul>
             <ul class="nav-right">
