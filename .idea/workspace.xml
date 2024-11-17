@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f647ef04-9159-42a1-9ec6-c72660185e0f" name="Changes" comment="adding the html and routes for chanigng password and view all users and orders">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/instance/bicycle_store.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-    </list>
+    <list default="true" id="f647ef04-9159-42a1-9ec6-c72660185e0f" name="Changes" comment="PostgreSQL" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -197,7 +191,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731829482397</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="PostgreSQL">
+      <option name="closed" value="true" />
+      <created>1731839395107</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731839395107</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -231,6 +233,7 @@
     <MESSAGE value="Update profile.html" />
     <MESSAGE value="adding" />
     <MESSAGE value="adding the html and routes for chanigng password and view all users and orders" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding the html and routes for chanigng password and view all users and orders" />
+    <MESSAGE value="PostgreSQL" />
+    <option name="LAST_COMMIT_MESSAGE" value="PostgreSQL" />
   </component>
 </project>
